@@ -1,10 +1,10 @@
 #
 #JackTokenizer.py
 #
-# CS2002   Project 10 Jack Compiler (part 1)
+# CS2002   Project 11 Jack Compiler (part 2)
 #
 # Fall 2017
-# last updated 25 Oct 2016
+# last updated 13 DEC 2017
 #
 # Ryan Sowers
 
@@ -74,25 +74,14 @@ class JackTokenizer(object):
             does not modify the line itself. '''
 
         symbolFound = False
-        commands = line.split(' ')
-        
-        if commands[0].isdigit():
-            return commands[0]
+        for character in line:
+            if character in DELIMITERS:         # updated from last project to use DELIMITERS
+                indexSymbol = line.find(character)
+                symbolFound = True
+                return line[:indexSymbol]
 
-        for item in commands:
-        	for character in item:
-        		if character in SYMBOLS:
-        			indexSymbol = item.find(character)
-        			symbolFound = True
-        			return item[:indexSymbol]
-        	if not symbolFound:
-        		return item
-
-        # index = 0
-        # while line[index].isdigit():
-        #     index += 1
-
-        # return line[:index]
+        if not symbolFound:
+            return line
         			
         
         

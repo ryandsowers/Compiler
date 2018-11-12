@@ -4,9 +4,10 @@
 # CS2002   Project 10 & 11 Jack Compiler 
 #
 # Fall 2017
-# last updated 25 Oct 2016
+# last updated 13 DEC 2017
 #
 # Ryan Sowers
+
 
 import sys  #for grading server
 from pathlib import *
@@ -35,9 +36,9 @@ class JackAnalyzer(object):
             returns the pathname of the directory upon successful completion. '''
         
         if self.targetPath.is_dir():
-            for eachFile in self.targetPath.iterdir():
+            for eachFile in sorted(self.targetPath.iterdir()):  # added 'sorted' because my files weren't being compiled in alphabetical order
                 if eachFile.suffix == '.jack':
-                    print(eachFile)
+                    # print(eachFile)
                     self.__processFile__(eachFile)  #file as a pathlib object
                     
         else:
@@ -82,6 +83,11 @@ class JackAnalyzer(object):
         self.__output__(finalOutput, finalCodeList)         # output .xml file
 
 
+        vmOutputFilePath = str(filePath)[:index] + '.vm'
+
+        self.__output__(vmOutputFilePath, cmplEng.compileVM())  # output .vm file
+
+
 
     def __output__(self, filePath, codeList):
         ''' outputs the VM code codeList into a file and returns the file path'''
@@ -102,11 +108,6 @@ class JackAnalyzer(object):
             flavor = "symbol"
             if token in glyphSubstitutes:
                 token = glyphSubstitutes[token]
-            # get(key[, default])
-                # return the value for key if key is in the dictionary, else return 
-                # default (optional)
-                # result = glyphSubstitutes.get(token, token) will return the symbol
-                # found in the dictionary; if not found, will just return the token
         elif token[0].isdigit():
             flavor = "integerConstant"
         elif token.startswith('"'):
@@ -143,12 +144,12 @@ if __name__=="__main__":
 
 
     #project 11 tests
-##    target = 'Seven'
-##    target = 'ConvertToBin'
-##    target = 'square'
-##    target = 'Average'
-##    target = 'Pong'
-##    target = 'ComplexArrays'
+##    target = 'Seven'            # .xml and T.xml comparison match; .vm passes comparison
+##    target = 'ConvertToBin'     # .xml and T.xml comparison match; .vm passes comparison
+##    target = 'Square'           # .xml and T.xml comparison match; .vm passes comparison
+##    target = 'Average'          # .xml and T.xml comparison match; .vm passes comparison
+##    target = 'Pong'             # .xml and T.xml comparison match; .vm passes comparison
+##    target = 'ComplexArrays'    # .xml and T.xml comparison match; .vm passes comparison
     
     analyzer = JackAnalyzer(target)
     print('\n' + analyzer.process() + ' has been translated.')

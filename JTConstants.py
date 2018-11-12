@@ -1,10 +1,10 @@
 #
 #JTConstants.py
 #
-# CS2002   Project 10 Jack Compiler (part 1)
+# CS2002   Project 11 Jack Compiler (part 2)
 #
 # Fall 2017
-# last updated 02 Sept Aug 2016
+# last updated 13 DEC 2017
 #
 
 import string
